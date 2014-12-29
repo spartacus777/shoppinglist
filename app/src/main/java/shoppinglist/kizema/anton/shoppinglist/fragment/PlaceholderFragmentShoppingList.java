@@ -104,8 +104,8 @@ public class PlaceholderFragmentShoppingList extends Fragment implements LoaderM
     }
 
         private int getMaxWidth(){
-        Display display = getActivity().getWindowManager().getDefaultDisplay();
-        int width = display.getWidth();
+            Display display = getActivity().getWindowManager().getDefaultDisplay();
+            int width = display.getWidth();
         return (int) ( width*0.75);
     }
 
