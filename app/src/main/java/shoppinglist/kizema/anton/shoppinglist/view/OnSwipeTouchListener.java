@@ -12,7 +12,8 @@ public class OnSwipeTouchListener implements View.OnTouchListener {
 
     private static final int SWIPE_THRESHOLD = (int) (0.1f ) * App.getW();
 
-    private float startMoveX = 0;
+    private float previousMoveX = 0;
+    private float onDownX = 0;
 
     private final GestureDetector gestureDetector;
     private OnSwipeListener onSwipeListener;
@@ -24,7 +25,7 @@ public class OnSwipeTouchListener implements View.OnTouchListener {
     }
 
     public interface OnHorizontalMoveViewListener {
-        void onMove(float x);
+        void onMove(float dx, int sign);
         void onCancelMove();
     }
 
@@ -39,12 +40,14 @@ public class OnSwipeTouchListener implements View.OnTouchListener {
 
 
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            startMoveX = event.getX();
+            previousMoveX = event.getX();
+            onDownX = event.getX();
         }
 
         if (res == false && event.getAction() == MotionEvent.ACTION_MOVE){
             if (getOnMoveViewListener() != null){
-                getOnMoveViewListener().onMove(event.getX() - startMoveX);
+                getOnMoveViewListener().onMove(event.getX() - previousMoveX, ( Math.abs(event.getX() - onDownX) > Math.abs(previousMoveX - onDownX)) ? 1 : -1 );
+                previousMoveX = event.getX();
             }
         }
 
