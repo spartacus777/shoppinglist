@@ -6,6 +6,7 @@ import android.os.SystemClock;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 
 import shoppinglist.kizema.anton.shoppinglist.App;
 import shoppinglist.kizema.anton.shoppinglist.color.FillBackgroundPolocy;
@@ -36,6 +37,7 @@ public class MovableView implements OnSwipeTouchListener.OnHorizontalMoveViewLis
 
     public interface OnScreenStateChangeListener{
         void onRemove(View v);
+        void onSwipeDetected(boolean isDetected);
     }
 
     public MovableView(View view) {
@@ -72,6 +74,7 @@ public class MovableView implements OnSwipeTouchListener.OnHorizontalMoveViewLis
                     Log.d("TAG", "ACTION_UP");
                     if (dispatchTouchToSwipeDetector) {
                         dispatchTouchToSwipeDetector = false;
+                        stateListener.onSwipeDetected(false);
                     }
                 }
                 return res;
@@ -105,6 +108,7 @@ public class MovableView implements OnSwipeTouchListener.OnHorizontalMoveViewLis
                     getFillBackgroundPolocy().setHooveredBackground(viewHolder);
                 }
                 dispatchTouchToSwipeDetector = true;
+                stateListener.onSwipeDetected(true);
 
                 long downTime = SystemClock.uptimeMillis();
                 long eventTime = SystemClock.uptimeMillis() + 100;
@@ -176,7 +180,7 @@ public class MovableView implements OnSwipeTouchListener.OnHorizontalMoveViewLis
     }
 
     private float getRequredMinShift(){
-        return App.getW() * PERCENT;
+        return ViewConfiguration.getTouchSlop();
     }
 
     public void setOnScreenStateChangeListener(OnScreenStateChangeListener stateListener){

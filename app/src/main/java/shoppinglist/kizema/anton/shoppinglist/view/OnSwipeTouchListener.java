@@ -5,12 +5,14 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 
 import shoppinglist.kizema.anton.shoppinglist.App;
 
 public class OnSwipeTouchListener implements View.OnTouchListener {
 
     private static final int SWIPE_THRESHOLD = (int) (0.1f ) * App.getW();
+    private static final int SWIPE_VELOCITY_THRESHOLD = ViewConfiguration.getMinimumFlingVelocity();
 
     private float previousMoveX = 0;
     private float onDownX = 0;
@@ -61,8 +63,6 @@ public class OnSwipeTouchListener implements View.OnTouchListener {
     }
 
     private final class GestureListener extends GestureDetector.SimpleOnGestureListener {
-
-        private static final int SWIPE_VELOCITY_THRESHOLD = 1000;
 
         @Override
         public boolean onDown(MotionEvent e) {

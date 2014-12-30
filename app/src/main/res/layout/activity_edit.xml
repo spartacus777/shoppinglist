@@ -10,7 +10,7 @@
     tools:context="shoppinglist.kizema.anton.shoppinglist.EditActivity">
 
 
-    <shoppinglist.kizema.anton.shoppinglist.view.LocableScrollView
+    <shoppinglist.kizema.anton.shoppinglist.view.LockableScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/scroll" >
@@ -27,7 +27,7 @@
 
         </LinearLayout>
 
-        </shoppinglist.kizema.anton.shoppinglist.view.LocableScrollView>
+        </shoppinglist.kizema.anton.shoppinglist.view.LockableScrollView>
 
 
 

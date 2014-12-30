@@ -15,14 +15,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import shoppinglist.kizema.anton.shoppinglist.color.RedColorBackgroundPolicy;
-import shoppinglist.kizema.anton.shoppinglist.view.LocableScrollView;
+import shoppinglist.kizema.anton.shoppinglist.view.LockableScrollView;
 import shoppinglist.kizema.anton.shoppinglist.view.MovableView;
 
 
 public class EditActivity extends ActionBarActivity implements MovableView.OnScreenStateChangeListener {
 
     private LinearLayout ll;
-    private LocableScrollView scroll;
+    private LockableScrollView scroll;
     private Map<EditText, String> entries;
     private boolean isScrollable = true;
 
@@ -32,8 +32,8 @@ public class EditActivity extends ActionBarActivity implements MovableView.OnScr
         setContentView(R.layout.activity_edit);
 
         ll = (LinearLayout) findViewById(R.id.llParent);
-        scroll = (LocableScrollView) findViewById(R.id.scroll);
-        enableScroll(false);
+        scroll = (LockableScrollView) findViewById(R.id.scroll);
+//        enableScroll(false);
         entries = new HashMap<EditText, String>();
 
         EditText firstEditText = (EditText) findViewById(R.id.editText);
@@ -110,5 +110,11 @@ public class EditActivity extends ActionBarActivity implements MovableView.OnScr
     public void onRemove(View v) {
         ll.removeView((View) v.getParent());
         entries.remove(v);
+    }
+
+    @Override
+    public void onSwipeDetected(boolean isDetected) {
+        Log.i("TAG", "onSwipeDetected = "+isDetected);
+        enableScroll(!isDetected);
     }
 }
