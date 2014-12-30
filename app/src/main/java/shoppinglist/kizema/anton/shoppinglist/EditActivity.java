@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import java.util.HashMap;
 import java.util.Map;
 
+import shoppinglist.kizema.anton.shoppinglist.color.RedColorBackgroundPolicy;
 import shoppinglist.kizema.anton.shoppinglist.view.LocableScrollView;
 import shoppinglist.kizema.anton.shoppinglist.view.MovableView;
 
@@ -75,6 +76,7 @@ public class EditActivity extends ActionBarActivity implements MovableView.OnScr
         });
 
         MovableView movableView = new MovableView(text);
+        movableView.setFillBackgroundPolocy(new RedColorBackgroundPolicy());
         movableView.setOnScreenStateChangeListener(this);
     }
 

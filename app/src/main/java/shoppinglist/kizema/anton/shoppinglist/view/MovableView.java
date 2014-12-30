@@ -2,13 +2,13 @@ package shoppinglist.kizema.anton.shoppinglist.view;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.graphics.Color;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
 import shoppinglist.kizema.anton.shoppinglist.App;
+import shoppinglist.kizema.anton.shoppinglist.color.FillBackgroundPolocy;
 import shoppinglist.kizema.anton.shoppinglist.util.Vector2f;
 
 
@@ -21,6 +21,8 @@ public class MovableView implements OnSwipeTouchListener.OnHorizontalMoveViewLis
 
     private OnSwipeTouchListener swipeGestureListener;
     private OnScreenStateChangeListener stateListener;
+
+    private FillBackgroundPolocy fillBackgroundPolocy;
 
     private Vector2f downCoords;
 
@@ -99,7 +101,9 @@ public class MovableView implements OnSwipeTouchListener.OnHorizontalMoveViewLis
         viewHolder.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                viewHolder.setBackgroundColor(Color.RED);
+                if (getFillBackgroundPolocy() != null){
+                    getFillBackgroundPolocy().setHooveredBackground(viewHolder);
+                }
                 dispatchTouchToSwipeDetector = true;
 
                 long downTime = SystemClock.uptimeMillis();
@@ -164,7 +168,9 @@ public class MovableView implements OnSwipeTouchListener.OnHorizontalMoveViewLis
                 .setListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
-                        viewHolder.setBackgroundColor(Color.TRANSPARENT);
+                        if (getFillBackgroundPolocy() != null){
+                            getFillBackgroundPolocy().setNormalBackground(viewHolder);
+                        }
                     }
                 });
     }
@@ -179,6 +185,14 @@ public class MovableView implements OnSwipeTouchListener.OnHorizontalMoveViewLis
 
     public OnScreenStateChangeListener getOnScreenStateChangeListener(){
         return stateListener;
+    }
+
+    public void setFillBackgroundPolocy(FillBackgroundPolocy fillBackgroundPolocy){
+        this.fillBackgroundPolocy = fillBackgroundPolocy;
+    }
+
+    public FillBackgroundPolocy getFillBackgroundPolocy(){
+        return fillBackgroundPolocy;
     }
 
 }
