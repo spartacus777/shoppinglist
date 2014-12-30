@@ -15,10 +15,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import shoppinglist.kizema.anton.shoppinglist.view.LocableScrollView;
-import shoppinglist.kizema.anton.shoppinglist.view.MovableEditText;
+import shoppinglist.kizema.anton.shoppinglist.view.MovableView;
 
 
-public class EditActivity extends ActionBarActivity implements MovableEditText.OnScreenStateChangeListener {
+public class EditActivity extends ActionBarActivity implements MovableView.OnScreenStateChangeListener {
 
     private LinearLayout ll;
     private LocableScrollView scroll;
@@ -35,7 +35,7 @@ public class EditActivity extends ActionBarActivity implements MovableEditText.O
         enableScroll(false);
         entries = new HashMap<EditText, String>();
 
-        MovableEditText firstEditText = (MovableEditText) findViewById(R.id.editText);
+        EditText firstEditText = (EditText) findViewById(R.id.editText);
         addListener(firstEditText);
     }
 
@@ -46,11 +46,11 @@ public class EditActivity extends ActionBarActivity implements MovableEditText.O
     private void addExtraView(){
         View child = getLayoutInflater().inflate(R.layout.edit_item, ll, false);
         ll.addView(child);
-        MovableEditText text = (MovableEditText) child.findViewById(R.id.editText);
+        EditText text = (EditText) child.findViewById(R.id.editText);
         addListener(text);
     }
 
-    private void addListener(final MovableEditText text){
+    private void addListener(final EditText text){
         text.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -74,7 +74,8 @@ public class EditActivity extends ActionBarActivity implements MovableEditText.O
             }
         });
 
-        text.setOnScreenStateChangeListener(this);
+        MovableView movableView = new MovableView(text);
+        movableView.setOnScreenStateChangeListener(this);
     }
 
     private void log(){
